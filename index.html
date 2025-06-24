@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trendition Agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Apply Inter font to the entire body */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            min-height: 200vh; /* Make body taller than viewport to enable scrolling */
+            /* Background image - now scrollable */
+            background-image: url('images/bg1.jpg'); /* Generic placeholder background */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background image */
+            background-attachment: scroll; /* Allow background to scroll */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-color: #ffffff; /* Fallback background color */
+            color: black; /* Text is now black at all times */
+        }
+
+        /* CSS for the Liquid Glass element */
+        .liquid-glass-element {
+            /* Dimensions and basic shape */
+            height: 80px; /* Reduced height to make it thinner */
+            border-radius: 40px; /* Increased border-radius for larger curve */
+            overflow: hidden; /* Important for the blur to work within the element */
+            display: flex;
+            flex-direction: row; /* Changed to row for horizontal buttons */
+            justify-content: flex-start; /* Align items to the start (left) */
+            align-items: center; /* Center vertically */
+            padding: 0 20px; /* Inner padding for sides */
+            box-sizing: border-box; /* Include padding in width/height */
+            gap: 20px; /* Space between logo and nav links wrapper */
+            
+            /* Pinned positioning at the top - Using fixed positioning for constant visibility */
+            position: fixed !important; /* Forces fixed positioning */
+            top: 20px !important;       /* Stays 20px from the top */
+            left: 50%;                  /* Centers horizontally */
+            transform: translateX(-50%); /* Adjusts for horizontal centering */
+            width: 90%;                 /* Responsive width */
+            max-width: 800px;           /* Max width */
+            z-index: 100;               /* Ensure it's above other content */
+
+            /* Reduced blur and adjusted background */
+            background-color: rgba(255, 255, 255, 0.2); /* Slightly increased opacity */
+            backdrop-filter: blur(10px); /* Reduced blur from 20px to 10px */
+            -webkit-backdrop-filter: blur(10px); /* For Safari support */
+
+            /* Slightly more visible border */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            /* Shadow for depth */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+            /* Specular Highlights (Simulated with a gradient overlay or pseudo-element) */
+            /* z-index is already 100 from fixed positioning, but keeping it ensures correct layering */
+            /* z-index: 10; */ 
+        }
+
+        /* Logo styling */
+        .logo {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0; /* Prevent logo from shrinking */
+            cursor: pointer;
+            margin-left: 20px; /* Added margin to shift the logo right - NEW */
+        }
+
+        /* Container for navigation links to manage their distribution */
+        .nav-links-wrapper {
+            display: flex;
+            flex-grow: 1; /* Allow this wrapper to take up remaining space */
+            justify-content: space-around; /* Distribute buttons evenly within this wrapper */
+            align-items: center;
+        }
+
+        /* Optional: Adding a subtle "light reflection" effect using a pseudo-element */
+        .liquid-glass-element::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 40px; /* Match parent's border-radius */
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.25) 0%, /* Slightly stronger highlight */
+                rgba(255, 255, 255, 0) 60%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: 1; 
+        }
+
+        /* Optional: Even more subtle inner highlight */
+        .liquid-glass-element::after {
+            content: '';
+            position: absolute;
+            top: 1px; /* Slightly inset */
+            left: 1px; /* Slightly inset */
+            right: 1px; /* Slightly inset */
+            bottom: 1px; /* Slightly inset */
+            border-radius: 39px; /* Slightly smaller radius */
+            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5); /* Original inner white glow */
+            pointer-events: none;
+        }
+
+        /* Navigation button styling */
+        .nav-button {
+            color: black; /* Text color is now solid black */
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            background-color: transparent;
+            white-space: nowrap;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2); /* Lighter text shadow for black text */
+            cursor: pointer;
+            border: none;
+            position: relative;
+            z-index: 3; /* Ensure text is above the moving bubble */
+        }
+
+        /* Dynamic moving bubble */
+        .moving-bubble {
+            position: absolute;
+            height: 40px; /* Adjust height to match button visual height */
+            background-color: rgba(255, 255, 255, 0.4); /* Decreased opacity */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+            border-radius: 25px; /* Match button border-radius */
+            transition: left 0.3s ease-out, width 0.3s ease-out; /* Animate position and width */
+            z-index: 2; /* Position behind button text but above glass background */
+            pointer-events: none; /* Allow clicks to pass through to buttons */
+            top: 50%; /* Vertically center the bubble */
+            transform: translateY(-50%);
+        }
+
+        /* Selected tab styling (for the text) - bubble is now dynamic */
+        .nav-button.selected {
+            color: black; /* Ensure text is black for selected state */
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3); /* Adjust text shadow for clarity on white */
+        }
+
+        /* General content styling for scrollable areas - NO MORE DARK CARDS */
+        .placeholder-text {
+            width: 80%;
+            max-width: 700px;
+            margin: 40px auto; /* Add margin for spacing */
+            padding: 0; /* Remove padding */
+            color: black; /* Default text color is black */
+            line-height: 1.6;
+            font-size: 1.1rem;
+            text-align: center; /* Center the text */
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2); /* Lighter text shadow for black text */
+            background-color: transparent; /* Make background transparent */
+            border-radius: 0; /* Remove border-radius */
+            box-shadow: none; /* Remove any box-shadow */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .liquid-glass-element {
+                height: 60px; /* Adjust height for smaller screens */
+                border-radius: 30px; /* Adjust border-radius for smaller screens */
+                max-width: 95%; /* Adjust max-width for smaller screens */
+                padding: 0 10px; /* Reduce padding on smaller screens */
+                gap: 10px; /* Adjust gap for smaller screens */
+            }
+            .nav-button {
+                font-size: 0.8rem; /* Smaller font on mobile */
+                padding: 6px 10px; /* Smaller padding on mobile */
+            }
+            .moving-bubble {
+                height: 30px; /* Adjust height for smaller screens */
+                border-radius: 20px; /* Adjust border-radius for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- The sticky glass navigation bar -->
+    <div class="liquid-glass-element">
+        <a href="#" class="logo" id="logoLink">
+            <!-- Updated logo source to a generic placeholder for visibility -->
+            <img src="images/tn-logo.png" alt="Trendition" class="h-full w-full object-contain rounded-full">
+        </a>
+        <div class="nav-links-wrapper">
+            <a href="#" class="nav-button selected" data-tab-name="home">Home</a> 
+            <a href="#" class="nav-button" data-tab-name="services">Services</a>
+            <a href="#" class="nav-button" data-tab-name="works">Works</a>
+            <a href="#" class="nav-button" data-tab-name="about">About</a>
+            <a href="#" class="nav-button" data-tab-name="contact">Contact</a>
+        </div>
+        <span class="moving-bubble" id="movingBubble"></span>
+    </div>
+
+    <!-- Spacer div to push content down below the fixed header -->
+    <div style="height: 120px;"></div> 
+
+    <!-- Placeholder content to create a scrollable area -->
+    <div class="placeholder-text"></div>
+    <div class="placeholder-text"></div>
+    <div class="placeholder-text"></div>
+    <div class="placeholder-text"></div>
+    <div class="placeholder-text"></div>
+    <div class="placeholder-text"></div>
+    <div class="placeholder-text"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navBar = document.querySelector('.liquid-glass-element');
+            const navButtons = document.querySelectorAll('.nav-button');
+            const movingBubble = document.getElementById('movingBubble');
+            const logoLink = document.getElementById('logoLink');
+            let selectedTab = document.querySelector('.nav-button.selected');
+
+            /**
+             * Updates the position and width of the moving bubble.
+             * @param {HTMLElement} targetButton The button to position the bubble under.
+             */
+            function updateBubblePosition(targetButton) {
+                if (!targetButton) return;
+
+                const navBarRect = navBar.getBoundingClientRect();
+                const buttonRect = targetButton.getBoundingClientRect();
+
+                const leftPosition = buttonRect.left - navBarRect.left;
+                const buttonWidth = buttonRect.width;
+
+                movingBubble.style.left = `${leftPosition}px`;
+                movingBubble.style.width = `${buttonWidth}px`;
+            }
+
+            // Initialize bubble position on load
+            updateBubblePosition(selectedTab);
+
+            // Add event listeners for mouseover on each button
+            navButtons.forEach(button => {
+                button.addEventListener('mouseover', () => {
+                    updateBubblePosition(button);
+                });
+
+                // Handle click to change selected tab
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    if (selectedTab) {
+                        selectedTab.classList.remove('selected');
+                    }
+                    selectedTab = event.currentTarget;
+                    selectedTab.classList.add('selected');
+                    updateBubblePosition(selectedTab);
+                });
+            });
+
+            // Add click event listener to the logo
+            logoLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                
+                const homeButton = document.querySelector('.nav-button[data-tab-name="home"]');
+                
+                if (homeButton) {
+                    if (selectedTab) {
+                        selectedTab.classList.remove('selected');
+                    }
+                    selectedTab = homeButton;
+                    selectedTab.classList.add('selected');
+                    updateBubblePosition(selectedTab);
+                }
+                // Optional: Scroll to top of the page when logo is clicked
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Add event listener for mouseleave on the navigation bar
+            navBar.addEventListener('mouseleave', () => {
+                updateBubblePosition(selectedTab);
+            });
+
+            // Recalculate bubble position on window resize for responsiveness
+            window.addEventListener('resize', () => {
+                updateBubblePosition(selectedTab);
+            });
+        });
+    </script>
+</body>
+</html>
