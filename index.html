@@ -203,7 +203,7 @@
             z-index: 0; /* Ensure it's behind pseudo-elements */
         }
 
-        /* Specific styles for Services card, Portfolio card, About Us card and Contact card (new) */
+        /* Specific styles for Services card, Portfolio card, About Us card and Contact card */
         #services-section .glass-card,
         #works-section .glass-card,
         #about-us-section .glass-card, 
@@ -213,24 +213,13 @@
             backdrop-filter: blur(10px); /* Matching blur */
             -webkit-backdrop-filter: blur(10px); /* Matching webkit blur */
             padding: 80px; /* Increased padding to 80px */
-            align-items: flex-start; /* Align content to top-left for title/description, then center scrollable cards */
+            /* Align content to the top (flex-start) and center horizontally (center) */
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center; /* Center horizontally */
             position: relative; /* For absolute positioning of arrows */
+            padding-left: 80px; /* Keep consistent padding */
+            padding-right: 80px; /* Keep consistent padding */
         }
-
-        #works-section .glass-card,
-        #about-us-section .glass-card { /* Centered content for works and about us cards */
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Contact Section specific alignment */
-        #contact-section .glass-card {
-            justify-content: flex-start; /* Align content to the start (top) */
-            align-items: flex-start; /* Align content to the start (left) */
-            padding-left: 80px; /* Ensure consistent padding as other cards */
-            padding-right: 80px;
-        }
-
 
         #services-section .glass-card::after,
         #works-section .glass-card::after,
@@ -251,26 +240,29 @@
             display: none; /* Hide this pseudo-element */
         }
 
+        /* For heading content wrapper - for all non-home cards */
         #services-section .glass-card .text-content-wrapper,
         #works-section .glass-card .text-content-wrapper,
         #about-us-section .glass-card .text-content-wrapper, 
         #contact-section .glass-card .text-content-wrapper { 
             width: 100%; /* Full width for text wrapper inside cards */
-            text-align: center; /* Center text within the services card, default for some */
-            margin-bottom: 20px; /* Space between text and scrollable cards */
+            text-align: center; /* Ensure text within wrapper is centered */
+            margin-bottom: 20px; /* Space between text and other content */
             position: relative; /* Ensure text is above the blur overlay */
             z-index: 1; /* Place text above the blur overlay */
+            flex-shrink: 0; /* Prevent this section from shrinking when main-content-area grows */
         }
-
-        #works-section .glass-card .text-content-wrapper,
-        #about-us-section .glass-card .text-content-wrapper { 
-            margin-bottom: 0; /* No margin bottom needed if it's the only text content */
-        }
-
-        /* Contact Section text-content-wrapper specific alignment */
-        #contact-section .glass-card .text-content-wrapper {
-            text-align: left; /* Align text within wrapper to the left */
-            margin-bottom: 0; /* Reset this if it's the primary text block */
+        
+        /* New wrapper for content that should be vertically centered */
+        .main-content-area {
+            width: 100%;
+            flex-grow: 1; /* Allow it to take up remaining vertical space */
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+            justify-content: center; /* Vertically center children */
+            align-items: center; /* Horizontally center children */
+            padding: 20px 0; /* Add some vertical padding inside if needed */
+            box-sizing: border-box;
         }
 
 
@@ -279,14 +271,10 @@
         #works-section .glass-card h2,
         #works-section .glass-card h3,
         #about-us-section .glass-card h2, 
-        #about-us-section .glass-card p { 
-            text-align: center; /* Center align headings in all cards */
-        }
-
-        /* Contact Section heading alignment */
+        #about-us-section .glass-card p,
         #contact-section .glass-card h2,
         #contact-section .glass-card h3 { 
-            text-align: left; /* Align headings in contact card to left */
+            text-align: center; /* Center align headings and other text */
         }
         
         /* Increase font size for "Coming Soon" */
@@ -295,26 +283,41 @@
             font-weight: 600; /* Made it bolder for prominence */
             margin-top: 20px; /* Added some top margin for spacing */
         }
+        /* Remove margin-top for h3 when it's inside main-content-area to allow full centering */
+        #works-section .main-content-area h3 {
+            margin-top: 0;
+        }
+        /* Remove default margins for h3 and p inside main-content-area */
+        .main-content-area h3,
+        .main-content-area p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
 
         /* Specific styling for About Us paragraph within the glass card */
         #about-us-section .glass-card p {
             line-height: 1.8;
             font-size: 1.1rem;
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
-            margin-bottom: 1rem; /* Adjust as needed for spacing between paragraphs */
+            /* Margin bottom for paragraphs within the text block, removed by general rule above */
+            /* margin-bottom: 1rem; */ 
+            text-align: center; /* Ensure paragraphs are centered in About Us */
         }
         #about-us-section .glass-card p:last-child {
-            margin-bottom: 0; /* Remove bottom margin for the last paragraph */
+            margin-bottom: 0; /* Remove bottom margin for the last paragraph (overridden by general rule) */
         }
 
         /* Specific styling for contact details */
         #contact-section .glass-card p {
             font-size: 1.1rem;
-            margin-bottom: 10px;
+            /* Margin bottom for contact paragraphs, removed by general rule above */
+            /* margin-bottom: 10px; */
             line-height: 1.5;
             text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-            text-align: left; /* Ensure paragraphs are left-aligned */
+            text-align: center; /* Ensure paragraphs are centered in Contact */
         }
+
 
         #services-section .glass-card::before,
         #works-section .glass-card::before,
@@ -328,10 +331,10 @@
             display: flex;
             flex-direction: row; /* Horizontal layout */
             overflow-x: hidden; /* Hide scrollbar completely and prevent user scrolling */
-            gap: 20px; /* Space between cards */
+            gap: 10px; /* Decreased gap from 20px to 10px */
             padding: 20px 0; /* Only vertical padding */
             width: 100%; /* Take full width of parent's content box */
-            margin: 0 -10px; /* Half of the gap value to align cards flush */
+            margin: 0 -5px; /* Half of the new gap value to align cards flush */
             justify-content: flex-start; /* Align items to the start for scrolling */
             align-items: center; /* Align to center within the container */
             scroll-snap-type: x mandatory; /* Snap to cards when scrolling */
@@ -353,8 +356,8 @@
 
         .service-card-item {
             flex-shrink: 0; /* Prevent cards from shrinking */
-            /* Adjusted width to show more of the next card */
-            width: calc((100% - (2 * 20px)) / 2.8); /* Changed from /3.2 to /2.8 for more overlap */
+            /* Adjusted width to show more of the next card with smaller gap */
+            width: calc((100% - (2 * 10px)) / 2.8); /* Adjusted calculation for 10px gap */
             height: 250px; /* Height for service card items */
             background-color: transparent;
             backdrop-filter: none; 
@@ -549,15 +552,8 @@
             #about-us-section .glass-card, 
             #contact-section .glass-card { 
                 padding: 40px; /* Adjusted padding for mobile */
-                justify-content: center; /* Center content for mobile */
+                justify-content: flex-start; /* Align content to the top (mobile) */
                 align-items: center; /* Center content for mobile */
-            }
-            /* Contact Section specific alignment for mobile */
-            #contact-section .glass-card {
-                justify-content: flex-start; /* Align content to the start (top) */
-                align-items: flex-start; /* Align content to the start (left) */
-                padding-left: 40px; /* Adjust padding for mobile */
-                padding-right: 40px;
             }
 
             #services-section .glass-card::after,
@@ -598,7 +594,7 @@
             }
             .service-cards-container {
                 padding: 10px 0; /* No horizontal padding, as per desktop */
-                margin: 0 -10px; /* Adjust for gap on mobile */
+                margin: 0 -5px; /* Half of the new gap value to align cards flush */
                 width: 100%; /* Fill container */
             }
             .service-card-item {
@@ -653,43 +649,44 @@
         <div class="glass-card">
             <div class="text-content-wrapper">
                 <h2>Our Services</h2>
+            </div>
+            <div class="main-content-area">
                 <h3>We offer a comprehensive suite of digital solutions designed to elevate your brand. From initial strategy to execution and optimization, our services are tailored to meet your unique business needs and deliver measurable results.</h3>
-            </div>
-            
-            <div class="scroll-arrow left" id="scrollLeftBtn">
-                <svg viewBox="0 0 24 24">
-                    <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z"/>
-                </svg>
-            </div>
-            <div class="scroll-arrow right" id="scrollRightBtn">
-                <svg viewBox="0 0 24 24">
-                    <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"/>
-                </svg>
-            </div>
-            <div class="service-cards-container" id="serviceCardsContainer">
-                <div class="service-card-item" data-service-id="digital-strategy">
-                    <h4>Digital Strategy & Consulting</h4>
-                    <p>Crafting bespoke digital roadmaps aligned with your business objectives for sustainable growth.</p>
+                <div class="scroll-arrow left" id="scrollLeftBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z"/>
+                    </svg>
                 </div>
-                <div class="service-card-item" data-service-id="seo">
-                    <h4>Search Engine Optimization (SEO)</h4>
-                    <p>Enhance your online visibility and drive organic traffic with our expert SEO strategies.</p>
+                <div class="scroll-arrow right" id="scrollRightBtn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"/>
+                    </svg>
                 </div>
-                <div class="service-card-item" data-service-id="smm">
-                    <h4>Social Media Marketing</h4>
-                    <p>Engage your audience and build brand loyalty across all major social media platforms.</p>
-                </div>
-                <div class="service-card-item" data-service-id="content-marketing">
-                    <h4>Content Creation & Marketing</h4>
-                    <p>Compelling content that resonates with your audience, from blogs to videos and infographics.</p>
-                </div>
-                <div class="service-card-item" data-service-id="web-development">
-                    <h4>Web Design & Development</h4>
-                    <p>Beautiful, user-friendly, and responsive websites that convert visitors into customers.</p>
-                </div>
-                <div class="service-card-item" data-service-id="ppc">
-                    <h4>Paid Advertising (PPC)</h4>
-                    <p>Maximize your ROI with targeted paid campaigns on Google Ads, social media, and more.</p>
+                <div class="service-cards-container" id="serviceCardsContainer">
+                    <div class="service-card-item" data-service-id="digital-strategy">
+                        <h4>Digital Strategy & Consulting</h4>
+                        <p>Crafting bespoke digital roadmaps aligned with your business objectives for sustainable growth.</p>
+                    </div>
+                    <div class="service-card-item" data-service-id="seo">
+                        <h4>Search Engine Optimization (SEO)</h4>
+                        <p>Enhance your online visibility and drive organic traffic with our expert SEO strategies.</p>
+                    </div>
+                    <div class="service-card-item" data-service-id="smm">
+                        <h4>Social Media Marketing</h4>
+                        <p>Engage your audience and build brand loyalty across all major social media platforms.</p>
+                    </div>
+                    <div class="service-card-item" data-service-id="content-marketing">
+                        <h4>Content Creation & Marketing</h4>
+                        <p>Compelling content that resonates with your audience, from blogs to videos and infographics.</p>
+                    </div>
+                    <div class="service-card-item" data-service-id="web-development">
+                        <h4>Web Design & Development</h4>
+                        <p>Beautiful, user-friendly, and responsive websites that convert visitors into customers.</p>
+                    </div>
+                    <div class="service-card-item" data-service-id="ppc">
+                        <h4>Paid Advertising (PPC)</h4>
+                        <p>Maximize your ROI with targeted paid campaigns on Google Ads, social media, and more.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -700,6 +697,8 @@
         <div class="glass-card">
             <div class="text-content-wrapper">
                 <h2>Our Portfolio</h2>
+            </div>
+            <div class="main-content-area">
                 <h3>Coming Soon</h3>
             </div>
         </div>
@@ -710,8 +709,13 @@
         <div class="glass-card">
             <div class="text-content-wrapper">
                 <h2>About Us</h2>
-                <p>Trendition Agency is a pioneering digital marketing and branding firm dedicated to empowering businesses to thrive in the ever-evolving online landscape. Our expertise spans strategic planning, innovative design, and robust execution, ensuring your brand achieves unparalleled visibility and engagement. We believe in crafting unique digital narratives that resonate deeply with your target audience, transforming casual visitors into loyal customers. Our commitment to staying ahead of industry trends, combined with a deep understanding of market dynamics, positions us as your ideal partner for sustained growth and success.</p>
-                <p>Founded on the principles of creativity, precision, and measurable results, Trendition Agency prides itself on a client-centric approach. We meticulously analyze market trends and consumer behavior to develop bespoke strategies that align with your business objectives. From comprehensive brand development to cutting-edge digital campaigns, our team of seasoned professionals is equipped to elevate your brand's presence and impact. Join us on a journey to redefine your digital footprint and unlock your brand's full potential.</p>
+            </div>
+            <div class="main-content-area">
+                <p>At Trendition, we believe digital marketing isn’t about noise. It’s about impact. We help businesses shape their presence through strategy-led execution across SEO, social media, content, branding, and websites. Whether you’re a local business finding your voice or a luxury brand refining its image, we adjust to your needs with clarity and intention.
+                <p>Our approach is bold but minimal. We don’t believe in clutter; we focus on what works. Every visual, every word, and every campaign has a purpose. We create narratives that connect and strategies that perform, all while staying true to who you are.</p>
+What sets us apart is not just skill; it’s sincerity. At Trendition, we care about the work itself. We're motivated by the love of building something meaningful, not by incentives. That energy shows in everything we do.
+From the first impression to lasting loyalty, we help you stand where you belong, with presence, position, and precision.</p>
+                <!-- <p>Founded on the principles of creativity, precision, and measurable results, Trendition Agency prides itself on a client-centric approach. We meticulously analyze market trends and consumer behavior to develop bespoke strategies that align with your business objectives. From comprehensive brand development to cutting-edge digital campaigns, our team of seasoned professionals is equipped to elevate your brand's presence and impact. Join us on a journey to redefine your digital footprint and unlock your brand's full potential.</p> -->
             </div>
         </div>
     </div>
@@ -721,10 +725,11 @@
         <div class="glass-card">
             <div class="text-content-wrapper">
                 <h2>Contact Us</h2>
-                <p>Have a project in mind? Reach out to us through the details below. We're always eager to discuss how we can help your brand succeed.</p>
-                <p><strong>Phone:</strong> +91 98765 43210</p>
+            </div>
+            <div class="main-content-area">
+                <h3>Have a project in mind? Reach out to us through the details below. We're always eager to discuss how we can help your brand succeed.</h3>
+                <p><strong>Phone:</strong> +91 96745 58449</p>
                 <p><strong>Email:</strong> trenditionagency@gmail.com</p>
-                <p><strong>Address:</strong> 123 Digital Drive, Kolkata, West Bengal, India</p>
             </div>
         </div>
     </div>
@@ -844,7 +849,7 @@
                     selectedTab.classList.add('selected');
                     updateBubblePosition(selectedTab);
                 }
-                scrollToSection('about');
+                scrollToSection('about-us');
             });
 
             // --- Infinite Carousel Logic ---
@@ -892,7 +897,7 @@
             // Scroll with arrows
             scrollLeftBtn.addEventListener('click', () => {
                 const cardWidth = serviceCardItems[CLONE_COUNT].offsetWidth;
-                const gap = 20;
+                const gap = 10; // Adjusted for new gap
                 serviceCardsContainer.scrollBy({
                     left: -(cardWidth + gap),
                     behavior: 'smooth'
@@ -901,7 +906,7 @@
 
             scrollRightBtn.addEventListener('click', () => {
                 const cardWidth = serviceCardItems[CLONE_COUNT].offsetWidth;
-                const gap = 20;
+                const gap = 10; // Adjusted for new gap
                 serviceCardsContainer.scrollBy({
                     left: (cardWidth + gap),
                     behavior: 'smooth'
