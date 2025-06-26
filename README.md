@@ -1,2 +1,2 @@
 # Trendition
-Web hosting for Trendition Agency
+Modern and sleek website development for Trendition Agency
