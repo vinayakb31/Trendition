@@ -2,25 +2,20 @@
 body {
     font-family: 'Inter', sans-serif;
     margin: 0;
-    /* Removed flexbox properties from body to allow position: sticky to work */
-    /* display: flex; */ 
-    /* flex-direction: column; */
-    /* align-items: center; */ 
     min-height: 200vh; /* Make body taller than viewport to enable scrolling */
     /* Background image - now scrollable */
-    background-image: url('images/background-bg.jpg'); /* Placeholder background image */
+    background-image: url('images/bg1.jpg'); /* Generic placeholder background */
     background-size: cover; /* Cover the entire background */
     background-position: center; /* Center the background image */
     background-attachment: scroll; /* Allow background to scroll */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-color: #ffffff; /* Fallback background color */
+    color: black; /* Text is now black at all times */
 }
 
 /* CSS for the Liquid Glass element */
 .liquid-glass-element {
     /* Dimensions and basic shape */
-    width: 90%; /* Responsive width */
-    max-width: 800px; /* Increased max-width to make it longer */
     height: 80px; /* Reduced height to make it thinner */
     border-radius: 40px; /* Increased border-radius for larger curve */
     overflow: hidden; /* Important for the blur to work within the element */
@@ -32,34 +27,27 @@ body {
     box-sizing: border-box; /* Include padding in width/height */
     gap: 20px; /* Space between logo and nav links wrapper */
     
-    /* Pinned positioning at the top */
-    position: sticky; /* Make the element sticky */
-    top: 20px; /* Pin to 20px from the top of the viewport */
-    margin-top: 20px; /* Add margin to prevent sticking to the absolute top */
-    margin-bottom: 20px; /* Add margin for spacing below */
-    
-    /* Horizontal centering */
-    /* This will now center the element because body is no longer flex */
-    margin-left: auto;
-    margin-right: auto;
-    position: relative; /* Needed for positioning the bubble span */
+    /* Pinned positioning at the top - Using fixed positioning for constant visibility */
+    position: fixed !important; /* Forces fixed positioning */
+    top: 20px !important;       /* Stays 20px from the top */
+    left: 50%;                  /* Centers horizontally */
+    transform: translateX(-50%); /* Adjusts for horizontal centering */
+    width: 90%;                 /* Responsive width */
+    max-width: 800px;           /* Max width */
+    z-index: 100;               /* Ensure it's above other content */
 
     /* Reduced blur and adjusted background */
     background-color: rgba(255, 255, 255, 0.2); /* Slightly increased opacity */
     backdrop-filter: blur(10px); /* Reduced blur from 20px to 10px */
     -webkit-backdrop-filter: blur(10px); /* For Safari support */
 
-    /* Slightly more visible border */
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Very thin white border */
+    border: 0.5px solid rgba(255, 255, 255, 0.7); /* Thinner and more visible white border */
 
     /* Shadow for depth */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 
     /* Specular Highlights (Simulated with a gradient overlay or pseudo-element) */
-    z-index: 10; /* Ensure it's above other scrolling content */
-
-    /* Removed perspective as it can interfere with position: sticky */
-    /* perspective: 500px; */ 
 }
 
 /* Logo styling */
@@ -67,6 +55,8 @@ body {
     width: 50px;
     height: 50px;
     flex-shrink: 0; /* Prevent logo from shrinking */
+    cursor: pointer;
+    margin-left: 20px; /* Added margin to shift the logo right */
 }
 
 /* Container for navigation links to manage their distribution */
@@ -113,17 +103,16 @@ body {
 .nav-button {
     color: black; /* Text color is now solid black */
     text-decoration: none;
-    padding: 8px 15px; /* Reverted to original padding for buttons */
-    border-radius: 25px; /* Reverted to original rounded button edges */
+    padding: 8px 15px;
+    border-radius: 25px;
     font-size: 1rem;
     font-weight: 500;
-    background-color: transparent; /* Default transparent background */
-    transition: color 0.3s ease; /* Only color transition for text */
+    background-color: transparent;
     white-space: nowrap;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2); 
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2); /* Lighter text shadow for black text */
     cursor: pointer;
     border: none;
-    position: relative; /* Needed for correct stacking context */
+    position: relative;
     z-index: 3; /* Ensure text is above the moving bubble */
 }
 
@@ -131,14 +120,14 @@ body {
 .moving-bubble {
     position: absolute;
     height: 40px; /* Adjust height to match button visual height */
-    background-color: rgba(255, 255, 255, 0.4); /* Decreased opacity here */
+    background-color: rgba(255, 255, 255, 0.4); /* Decreased opacity */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
     border-radius: 25px; /* Match button border-radius */
     transition: left 0.3s ease-out, width 0.3s ease-out; /* Animate position and width */
     z-index: 2; /* Position behind button text but above glass background */
     pointer-events: none; /* Allow clicks to pass through to buttons */
     top: 50%; /* Vertically center the bubble */
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateX(-2px); /* Adjusted left by 2px */
 }
 
 /* Selected tab styling (for the text) - bubble is now dynamic */
@@ -153,15 +142,82 @@ body {
     max-width: 700px;
     margin: 40px auto; /* Add margin for spacing */
     padding: 0; /* Remove padding */
-    color: black; /* Text color */
+    color: black; /* Default text color is black */
     line-height: 1.6;
     font-size: 1.1rem;
     text-align: center; /* Center the text */
-    text-shadow: 0 1px 2px rgba(255,255,255,0.2); /* Subtle light text shadow for black text */
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2); /* Lighter text shadow for black text */
     background-color: transparent; /* Make background transparent */
     border-radius: 0; /* Remove border-radius */
     box-shadow: none; /* Remove any box-shadow */
 }
+
+/* Styles for the content section (card) */
+.content-section {
+    display: flex;
+    justify-content: center; /* Center the single card horizontally */
+    align-items: flex-start; /* Align item to the top of the section */
+    width: 100%; /* Now spans full width */
+    max-width: none; /* Removed max-width constraint */
+    padding: 0 20px; /* Add horizontal padding to prevent content from touching edges */
+    box-sizing: border-box; /* Include padding in width */
+    margin-top: 120px; /* Positioned directly after fixed header + gap */
+    margin-bottom: 40px; /* Add margin to bottom of the section */
+}
+
+.glass-card {
+    flex: none; /* Do not allow card to grow/shrink based on flex 1 */
+    width: 80%; /* Card now spans 80% of the page width */
+    max-width: none; /* Removed max-width to allow it to span more width */
+    min-width: 300px; /* Ensure a reasonable minimum width for mobile/smaller screens */
+    background-color: rgba(255, 255, 255, 0.2); /* Matching glass background */
+    backdrop-filter: blur(10px); /* Matching glass blur */
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.5px solid rgba(255, 255, 255, 0.7); /* Matching glass border */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Matching glass shadow */
+    border-radius: 40px; /* Matching border-radius */
+    padding: 30px; /* Internal padding */
+    box-sizing: border-box; /* Include padding in width/height */
+    color: black; /* Text color */
+    
+    /* Flexbox properties for content alignment */
+    display: flex;
+    flex-direction: column; /* Column direction for h2 and h3 */
+    justify-content: center; /* Center content vertically */
+    align-items: flex-start; /* Align content to the start (left) */
+    
+    height: 80vh; /* Make card span 80% of viewport height */
+    overflow-y: auto; /* Add scroll for content if it exceeds height */
+
+    /* Customisable text sizes */
+    --h2-font-size: 1.8rem; /* Default H2 font size */
+    --h3-font-size: 1rem;   /* Default H3 font size */
+}
+
+/* Wrapper for text content within the glass card */
+.text-content-wrapper {
+    width: 50%; /* Text content spans left 50% of the card */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.glass-card h2 {
+    font-size: var(--h2-font-size); /* Using custom property */
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+    text-align: left; /* Ensure text inside H2 is left-aligned */
+    width: 100%; /* Ensure H2 takes full available width inside its parent */
+}
+
+.glass-card h3 {
+    font-size: var(--h3-font-size); /* Using custom property */
+    font-weight: 500;
+    line-height: 1.6;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+    text-align: left; /* Ensure text inside H3 is left-aligned */
+    width: 100%; /* Ensure H3 takes full available width inside its parent */
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
@@ -179,5 +235,30 @@ body {
     .moving-bubble {
         height: 30px; /* Adjust height for smaller screens */
         border-radius: 20px; /* Adjust border-radius for smaller screens */
+    }
+    .content-section {
+        flex-direction: column; /* Stack columns vertically on small screens */
+        align-items: center; /* Center stacked items */
+        gap: 20px; /* Reduced gap for stacked items */
+        padding: 0 10px; /* Adjust padding for mobile */
+    }
+    .glass-card {
+        width: 95%; /* Adjust for mobile, can be 100% too */
+        min-width: auto; /* Allow auto width on mobile */
+        border-radius: 30px; /* Match responsive border-radius */
+        height: auto; /* Allow height to be auto on mobile when stacked */
+        padding: 20px;
+        justify-content: flex-start; /* Reset vertical alignment for mobile */
+        align-items: flex-start; /* Reset horizontal alignment for mobile */
+    }
+    .text-content-wrapper {
+        width: 100%; /* Text content spans full width on mobile */
+    }
+    .glass-card h2 {
+        font-size: 1.5rem; /* Specific font size for mobile H2 */
+        width: auto; /* Allow auto width on mobile */
+    }
+    .glass-card h3 {
+        width: auto; /* Allow auto width on mobile */
     }
 }

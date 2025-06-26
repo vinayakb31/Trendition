@@ -14,19 +14,17 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             min-height: 200vh; /* Make body taller than viewport to enable scrolling */
-            /* Background image - now scrollable */
-            background-image: url('images/bg1.jpg'); /* Generic placeholder background */
+            background-image: url('images/jean-philippe-delberghe-75xPHEQBmvA-unsplash.jpg');
             background-size: cover; /* Cover the entire background */
             background-position: center; /* Center the background image */
             background-attachment: scroll; /* Allow background to scroll */
             background-repeat: no-repeat; /* Do not repeat the image */
-            background-color: #ffffff; /* Fallback background color */
+            background-color: #cfcfcf; /* Fallback background color */
             color: black; /* Text is now black at all times */
         }
 
         /* CSS for the Liquid Glass element */
         .liquid-glass-element {
-            /* Dimensions and basic shape */
             height: 80px; /* Reduced height to make it thinner */
             border-radius: 40px; /* Increased border-radius for larger curve */
             overflow: hidden; /* Important for the blur to work within the element */
@@ -38,7 +36,6 @@
             box-sizing: border-box; /* Include padding in width/height */
             gap: 20px; /* Space between logo and nav links wrapper */
             
-            /* Pinned positioning at the top - Using fixed positioning for constant visibility */
             position: fixed !important; /* Forces fixed positioning */
             top: 20px !important;       /* Stays 20px from the top */
             left: 50%;                  /* Centers horizontally */
@@ -47,20 +44,12 @@
             max-width: 800px;           /* Max width */
             z-index: 100;               /* Ensure it's above other content */
 
-            /* Reduced blur and adjusted background */
             background-color: rgba(255, 255, 255, 0.2); /* Slightly increased opacity */
             backdrop-filter: blur(10px); /* Reduced blur from 20px to 10px */
             -webkit-backdrop-filter: blur(10px); /* For Safari support */
 
-            /* Slightly more visible border */
-            border: 1px solid rgba(255, 255, 255, 0.3);
-
-            /* Shadow for depth */
+            border: 0.5px solid rgba(255, 255, 255, 0.7); /* Thinner and more visible white border */
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-
-            /* Specular Highlights (Simulated with a gradient overlay or pseudo-element) */
-            /* z-index is already 100 from fixed positioning, but keeping it ensures correct layering */
-            /* z-index: 10; */ 
         }
 
         /* Logo styling */
@@ -69,7 +58,7 @@
             height: 50px;
             flex-shrink: 0; /* Prevent logo from shrinking */
             cursor: pointer;
-            margin-left: 20px; /* Added margin to shift the logo right - NEW */
+            margin-left: 20px; /* Added margin to shift the logo right */
         }
 
         /* Container for navigation links to manage their distribution */
@@ -140,7 +129,7 @@
             z-index: 2; /* Position behind button text but above glass background */
             pointer-events: none; /* Allow clicks to pass through to buttons */
             top: 50%; /* Vertically center the bubble */
-            transform: translateY(-50%);
+            transform: translateY(-50%) translateX(-2px); /* Adjusted left by 2px */
         }
 
         /* Selected tab styling (for the text) - bubble is now dynamic */
@@ -165,6 +154,316 @@
             box-shadow: none; /* Remove any box-shadow */
         }
 
+        /* Styles for the content section (card) */
+        .content-section {
+            display: flex;
+            justify-content: center; /* Center the single card horizontally */
+            align-items: flex-start; /* Align item to the top of the section */
+            width: 100%; /* Now spans full width */
+            max-width: none; /* Removed max-width constraint */
+            padding: 0; /* Removed horizontal padding */
+            box-sizing: border-box; /* Include padding in width */
+            margin-top: 120px; /* Positioned directly after fixed header + gap */
+            margin-bottom: 40px; /* Add margin to bottom of the section */
+        }
+
+        .glass-card {
+            flex: none; /* Do not allow card to grow/shrink based on flex 1 */
+            width: 80%; /* Card now spans 80% of the page width */
+            max-width: none; /* Removed max-width to allow it to span more width */
+            min-width: 300px; /* Ensure a reasonable minimum width for mobile/smaller screens */
+            background-color: rgba(255, 255, 255, 0.2); /* Matching glass background */
+            backdrop-filter: blur(10px); /* Matching glass blur */
+            -webkit-backdrop-filter: blur(10px);
+            border: 0.5px solid rgba(255, 255, 255, 0.7); /* Matching glass border */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Matching glass shadow */
+            border-radius: 40px; /* Matching border-radius */
+            padding: 150px; /* Internal padding changed to 150px */
+            box-sizing: border-box; /* Include padding in width/height */
+            color: black; /* Text color */
+            
+            /* Flexbox properties for content alignment */
+            display: flex;
+            flex-direction: column; /* Column direction for h2 and h3 */
+            justify-content: center; /* Center content vertically */
+            align-items: flex-start; /* Align content to the start (left) */
+            
+            height: 80vh; /* Make card span 80% of viewport height */
+            overflow-y: auto; /* Add scroll for content if it exceeds height */
+
+            /* Customisable text sizes */
+            --h2-font-size: 3.5rem; /* Default H2 font size */
+            --h3-font-size: 1.2rem;   /* Default H3 font size */
+
+            /* Background image for the card (only for home-section) */
+            background-image: url('images/christopher-gower-vjMgqUkS8q8-unsplash.jpg'); /* Placeholder image */
+            background-size: cover; /* Cover the entire area */
+            background-position: center; /* Center the background image */
+            position: relative; /* Needed for pseudo-element positioning */
+            z-index: 0; /* Ensure it's behind pseudo-elements */
+        }
+
+        /* Specific styles for Services card */
+        #services-section .glass-card {
+            background-image: none; /* Removed background image */
+            background-color: rgba(255, 255, 255, 0.2); /* Matching background color */
+            backdrop-filter: blur(10px); /* Matching blur */
+            -webkit-backdrop-filter: blur(10px); /* Matching webkit blur */
+            padding: 80px; /* Increased padding to 80px */
+            align-items: flex-start; /* Align content to top-left for title/description, then center scrollable cards */
+            position: relative; /* For absolute positioning of arrows */
+        }
+
+        #services-section .glass-card::after { /* Removed this as the main card now has the blur */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 40px; /* Match parent's border-radius */
+            background-color: rgba(255, 255, 255, 0.2); /* Same as liquid-glass-element background-color */
+            backdrop-filter: blur(10px); /* Same as liquid-glass-element blur */
+            -webkit-backdrop-filter: blur(10px);
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: 0; /* Behind other content but above the image */
+            display: none; /* Hide this pseudo-element */
+        }
+
+        #services-section .glass-card .text-content-wrapper {
+            width: 100%; /* Full width for text wrapper inside services card */
+            text-align: center; /* Center text within the services card */
+            margin-bottom: 20px; /* Space between text and scrollable cards */
+            position: relative; /* Ensure text is above the blur overlay */
+            z-index: 1; /* Place text above the blur overlay */
+        }
+
+        #services-section .glass-card h2,
+        #services-section .glass-card h3 {
+            text-align: center; /* Center align headings in services card */
+        }
+        
+        #services-section .glass-card::before {
+            display: none; /* Hide the blur pseudo-element for services card (now using ::after) */
+        }
+
+        /* Styling for horizontally scrollable service cards */
+        .service-cards-container {
+            display: flex;
+            flex-direction: row; /* Horizontal layout */
+            overflow-x: scroll; /* Enable horizontal scrolling */
+            gap: 20px; /* Space between cards */
+            /* Removed horizontal padding here; the glass-card padding handles spacing */
+            padding: 20px 0; /* Only vertical padding */
+            width: 100%; /* Take full width of parent's content box */
+            /* Adjusted margin to account for half the gap on each side,
+               ensuring cards start/end flush with container edges. */
+            margin: 0 -10px; /* Half of the gap value */
+            justify-content: flex-start; /* Align items to the start for scrolling */
+            align-items: center; /* Align to center within the container */
+            scroll-snap-type: x mandatory; /* Snap to cards when scrolling */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+
+            position: relative; /* Keep relative for containing elements if needed */
+            z-index: 1; /* Ensure container is above the blur overlay */
+        }
+
+        /* Hide scrollbar for Webkit browsers */
+        .service-cards-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .service-card-item {
+            flex-shrink: 0; /* Prevent cards from shrinking */
+            /* Calculate width to precisely fit 3 cards and 2 gaps within the container's width */
+            width: calc((100% - (2 * 20px)) / 3); /* 20px gap between items */
+            height: 250px; /* Increased height for service card items */
+            background-color: transparent;
+            backdrop-filter: none; 
+            -webkit-backdrop-filter: none; 
+            border: 0.5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 20px; /* Rounded corners for smaller cards */
+            padding: 40px; /* Increased padding to 40px */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally within card */
+            justify-content: center; /* Center content vertically within card */
+            text-align: center; /* Center text within card */
+            color: black;
+            scroll-snap-align: start; /* Snap cards to start for consistent 3-card view */
+            transition: none; 
+        }
+
+        .service-card-item h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+        }
+
+        .service-card-item p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Navigation Arrows for Service Cards */
+        .scroll-arrow {
+            position: absolute;
+            top: auto; /* Reset top */
+            bottom: 120px; /* Position at the bottom of the service card container */
+            transform: translateY(0); /* Reset transform */
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 0.5px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10; /* Above cards and overlay */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .scroll-arrow:hover {
+            background-color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.1); /* Only scale, no translateY */
+        }
+        .scroll-arrow:active {
+            transform: scale(0.95); /* Only scale, no translateY */
+        }
+
+        .scroll-arrow.left {
+            left: 650px; /* Aligned with the glass-card's internal padding */
+        }
+
+        .scroll-arrow.right {
+            right: 650px; /* Aligned with the glass-card's internal padding */
+        }
+
+        .scroll-arrow svg {
+            width: 20px;
+            height: 20px;
+            fill: black; /* Arrow color */
+        }
+
+        /* Pseudo-element for gradual blur on the left half (only for home card) */
+        #home-section .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Cover the entire card horizontally */
+            height: 100%; /* Cover the entire card vertically */
+            background: transparent; /* This background is just a placeholder for the blur filter */
+            backdrop-filter: blur(15px); /* Apply blur to the pseudo-element's background */
+            -webkit-backdrop-filter: blur(15px);
+            /* Mask to apply blur gradually from left to right */
+            mask-image: linear-gradient(to right, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
+            z-index: 1; /* Position above the background image, but below text content */
+            pointer-events: none; /* Allow interaction with elements below */
+            border-radius: 40px; /* Match card border-radius for smooth edges */
+        }
+
+        /* Wrapper for text content within the glass card */
+        .text-content-wrapper {
+            width: 50%; /* Text content spans left 50% of the card */
+            box-sizing: border-box; /* Include padding in width */
+            position: relative; /* Ensure text is above the blur pseudo-element */
+            z-index: 2; /* Place text above the blurred pseudo-element */
+        }
+
+        .glass-card h2 {
+            font-size: var(--h2-font-size); /* Using custom property */
+            font-weight: 700;
+            margin-bottom: 0; /* Decreased margin-bottom to reduce space between H2 lines */
+            line-height: 1.1; /* Decreased line-height for closer H2 lines */
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+            text-align: left; /* Ensure text inside H2 is left-aligned */
+            width: 100%; /* Ensure H2 takes full available width inside its parent */
+        }
+
+        .glass-card h3 {
+            font-size: var(--h3-font-size); /* Using custom property */
+            font-weight: 500;
+            line-height: 1.6;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+            text-align: left; /* Ensure text inside H3 is left-aligned */
+            width: 100%; /* Ensure H3 takes full available width inside its parent */
+            margin-bottom: 25px; /* Increased margin-bottom to create more gap */
+        }
+
+        /* Learn More button styling */
+        .learn-more-button {
+            display: inline-block; /* Allows padding and margin */
+            padding: 10px 25px; /* Padding similar to nav buttons but a bit larger */
+            border-radius: 30px; /* Rounded corners */
+            background-color: rgba(255, 255, 255, 0.3); /* Slightly more opaque glass */
+            backdrop-filter: blur(8px); /* Less blur than main elements for subtle difference */
+            -webkit-backdrop-filter: blur(8px);
+            border: 0.5px solid rgba(255, 255, 255, 0.8); /* Slightly more prominent border */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            color: black; /* Black text */
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none; /* Remove underline */
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 50px; /* Space above the button */
+            white-space: nowrap; /* Prevent text wrap */
+        }
+
+        .learn-more-button:hover {
+            background-color: black; /* Inverted background color */
+            color: white; /* Inverted text color */
+            border-color: rgba(0, 0, 0, 0.8); /* Inverted border color for consistency */
+            transform: none; /* Static, no popping up */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Adjusted shadow for inverted state */
+        }
+
+        .learn-more-button:active {
+            transform: none; /* Static, no popping up */
+            background-color: rgba(0, 0, 0, 0.8); /* Slightly darker active state */
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* About Us Section styling */
+        .about-us-section {
+            width: 80%; /* Match glass-card width */
+            max-width: none;
+            min-width: 300px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 0.5px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 40px;
+            padding: 40px; /* Generous padding */
+            box-sizing: border-box;
+            color: black;
+            margin: 40px auto; /* Centered and spaced */
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: center; /* Center the text for this section */
+        }
+
+        .about-us-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+        
         /* Responsive adjustments */
         @media (max-width: 640px) {
             .liquid-glass-element {
@@ -182,14 +481,87 @@
                 height: 30px; /* Adjust height for smaller screens */
                 border-radius: 20px; /* Adjust border-radius for smaller screens */
             }
+            .content-section {
+                flex-direction: column; /* Stack columns vertically on small screens */
+                align-items: center; /* Center stacked items */
+                gap: 20px; /* Reduced gap for stacked items */
+                padding: 0 10px; /* Adjust padding for mobile */
+            }
+            .glass-card {
+                width: 95%; /* Adjust for mobile, can be 100% too */
+                min-width: auto; /* Allow auto width on mobile */
+                border-radius: 30px; /* Match responsive border-radius */
+                height: auto; /* Allow height to be auto on mobile when stacked */
+                padding: 20px; /* Adjust padding for mobile */
+                justify-content: flex-start; /* Reset vertical alignment for mobile */
+                align-items: flex-start; /* Reset horizontal alignment for mobile */
+                background-image: none; /* Remove image on small screens */
+            }
+            #services-section .glass-card {
+                padding: 40px; /* Adjusted padding for mobile */
+            }
+            #services-section .glass-card::after { /* Mobile blur overlay */
+                border-radius: 30px; /* Match responsive border-radius */
+                display: none; /* Keep hidden for services card */
+            }
+            .glass-card::before {
+                display: none; /* Hide the blur pseudo-element on small screens */
+            }
+            .text-content-wrapper {
+                width: 100%; /* Text content spans full width on mobile */
+            }
+            .glass-card h2 {
+                font-size: 1.5rem; /* Specific font size for mobile H2 */
+                width: auto; /* Allow auto width on mobile */
+                margin-bottom: 10px; /* Adjust margin for mobile */
+                line-height: 1.2; /* Adjust line-height for mobile */
+            }
+            .glass-card h3 {
+                width: auto; /* Allow auto width on mobile */
+                margin-bottom: 15px; /* Adjust margin for mobile */
+            }
+            .learn-more-button {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+                margin-top: 15px;
+            }
+            .about-us-section {
+                width: 95%;
+                padding: 30px;
+            }
+            .about-us-section h2 {
+                font-size: 2rem;
+            }
+            .service-cards-container {
+                padding: 10px 0; /* No horizontal padding, as per desktop */
+                margin: 0 -10px; /* Adjust for gap on mobile */
+                width: 100%; /* Fill container */
+            }
+            .service-card-item {
+                width: calc((100% - (0 * 20px)) / 1); /* Show 1 card at once on mobile, no gaps between for single card view */
+                height: 300px; /* Adjust height for mobile service cards */
+                padding: 20px; /* Adjusted padding for mobile service cards */
+            }
+            .scroll-arrow {
+                width: 30px;
+                height: 30px;
+            }
+            .scroll-arrow svg {
+                width: 15px;
+                height: 15px;
+            }
+            .scroll-arrow.left {
+                left: 40px; /* Aligned with glass-card mobile padding */
+            }
+            .scroll-arrow.right {
+                right: 40px; /* Aligned with glass-card mobile padding */
+            }
         }
     </style>
 </head>
 <body>
-    <!-- The sticky glass navigation bar -->
     <div class="liquid-glass-element">
         <a href="#" class="logo" id="logoLink">
-            <!-- Updated logo source to a generic placeholder for visibility -->
             <img src="images/tn-logo.png" alt="Trendition" class="h-full w-full object-contain rounded-full">
         </a>
         <div class="nav-links-wrapper">
@@ -202,10 +574,67 @@
         <span class="moving-bubble" id="movingBubble"></span>
     </div>
 
-    <!-- Spacer div to push content down below the fixed header -->
-    <div style="height: 120px;"></div> 
+    <div class="content-section" id="home-section">
+        <div class="glass-card">
+            <div class="text-content-wrapper">
+                <h3>Reach your brand's potential with</h3>
+                <h2>PRECISION<br>POSITION<br>PRESENCE</h2>
+                <button class="learn-more-button" id="learnMoreBtn">Learn More</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- Placeholder content to create a scrollable area -->
+    <div class="content-section" id="services-section">
+        <div class="glass-card">
+            <div class="text-content-wrapper">
+                <h2>Our Services</h2>
+            </div>
+            
+            <div class="scroll-arrow left" id="scrollLeftBtn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z"/>
+                </svg>
+            </div>
+            <div class="scroll-arrow right" id="scrollRightBtn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"/>
+                </svg>
+            </div>
+            <div class="service-cards-container" id="serviceCardsContainer">
+                <div class="service-card-item" data-service-id="digital-strategy">
+                    <h4>Digital Strategy & Consulting</h4>
+                    <p>Crafting bespoke digital roadmaps aligned with your business objectives for sustainable growth.</p>
+                </div>
+                <div class="service-card-item" data-service-id="seo">
+                    <h4>Search Engine Optimization (SEO)</h4>
+                    <p>Enhance your online visibility and drive organic traffic with our expert SEO strategies.</p>
+                </div>
+                <div class="service-card-item" data-service-id="smm">
+                    <h4>Social Media Marketing</h4>
+                    <p>Engage your audience and build brand loyalty across all major social media platforms.</p>
+                </div>
+                <div class="service-card-item" data-service-id="content-marketing">
+                    <h4>Content Creation & Marketing</h4>
+                    <p>Compelling content that resonates with your audience, from blogs to videos and infographics.</p>
+                </div>
+                <div class="service-card-item" data-service-id="web-development">
+                    <h4>Web Design & Development</h4>
+                    <p>Beautiful, user-friendly, and responsive websites that convert visitors into customers.</p>
+                </div>
+                <div class="service-card-item" data-service-id="ppc">
+                    <h4>Paid Advertising (PPC)</h4>
+                    <p>Maximize your ROI with targeted paid campaigns on Google Ads, social media, and more.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-us-section" id="about-us-section">
+        <h2>About Us</h2>
+        <p>Trendition Agency is a pioneering digital marketing and branding firm dedicated to empowering businesses to thrive in the ever-evolving online landscape. Our expertise spans strategic planning, innovative design, and robust execution, ensuring your brand achieves unparalleled visibility and engagement. We believe in crafting unique digital narratives that resonate deeply with your target audience, transforming casual visitors into loyal customers. Our commitment to staying ahead of industry trends, combined with a deep understanding of market dynamics, positions us as your ideal partner for sustained growth and success.</p>
+        <p>Founded on the principles of creativity, precision, and measurable results, Trendition Agency prides itself on a client-centric approach. We meticulously analyze market trends and consumer behavior to develop bespoke strategies that align with your business objectives. From comprehensive brand development to cutting-edge digital campaigns, our team of seasoned professionals is equipped to elevate your brand's presence and impact. Join us on a journey to redefine your digital footprint and unlock your brand's full potential.</p>
+    </div>
+
     <div class="placeholder-text"></div>
     <div class="placeholder-text"></div>
     <div class="placeholder-text"></div>
@@ -220,35 +649,64 @@
             const navButtons = document.querySelectorAll('.nav-button');
             const movingBubble = document.getElementById('movingBubble');
             const logoLink = document.getElementById('logoLink');
+            const learnMoreBtn = document.getElementById('learnMoreBtn');
+            const serviceCardsContainer = document.getElementById('serviceCardsContainer');
+            const scrollLeftBtn = document.getElementById('scrollLeftBtn');
+            const scrollRightBtn = document.getElementById('scrollRightBtn');
+            let serviceCardItems = Array.from(document.querySelectorAll('.service-card-item'));
+            
             let selectedTab = document.querySelector('.nav-button.selected');
 
-            /**
-             * Updates the position and width of the moving bubble.
-             * @param {HTMLElement} targetButton The button to position the bubble under.
-             */
+            // Define your sections and their corresponding nav data-tab-name
+            const sections = [
+                { element: document.getElementById('home-section'), navTab: 'home' },
+                { element: document.getElementById('services-section'), navTab: 'services' },
+                { element: document.getElementById('about-us-section'), navTab: 'about' },
+                // Add other sections like 'works-section', 'contact-section' when they exist in HTML
+            ];
+
             function updateBubblePosition(targetButton) {
                 if (!targetButton) return;
-
                 const navBarRect = navBar.getBoundingClientRect();
                 const buttonRect = targetButton.getBoundingClientRect();
-
-                const leftPosition = buttonRect.left - navBarRect.left;
+                const leftPosition = (buttonRect.left - navBarRect.left); 
                 const buttonWidth = buttonRect.width;
-
                 movingBubble.style.left = `${leftPosition}px`;
                 movingBubble.style.width = `${buttonWidth}px`;
             }
 
-            // Initialize bubble position on load
+            /**
+             * Scrolls to the target section or to the top of the page.
+             * @param {string} sectionName The data-tab-name of the target section (e.g., 'home', 'services', 'about').
+             */
+            function scrollToSection(sectionName) {
+                let targetElement;
+                const offset = 120; // 120px gap from the top
+
+                if (sectionName === 'home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                } else {
+                    targetElement = document.getElementById(sectionName + '-section');
+                }
+
+                if (targetElement) {
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
             updateBubblePosition(selectedTab);
 
-            // Add event listeners for mouseover on each button
             navButtons.forEach(button => {
                 button.addEventListener('mouseover', () => {
                     updateBubblePosition(button);
                 });
-
-                // Handle click to change selected tab
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
                     if (selectedTab) {
@@ -257,15 +715,14 @@
                     selectedTab = event.currentTarget;
                     selectedTab.classList.add('selected');
                     updateBubblePosition(selectedTab);
+                    const targetTabName = selectedTab.dataset.tabName;
+                    scrollToSection(targetTabName);
                 });
             });
 
-            // Add click event listener to the logo
             logoLink.addEventListener('click', (event) => {
                 event.preventDefault();
-                
                 const homeButton = document.querySelector('.nav-button[data-tab-name="home"]');
-                
                 if (homeButton) {
                     if (selectedTab) {
                         selectedTab.classList.remove('selected');
@@ -274,18 +731,142 @@
                     selectedTab.classList.add('selected');
                     updateBubblePosition(selectedTab);
                 }
-                // Optional: Scroll to top of the page when logo is clicked
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                scrollToSection('home');
             });
 
-            // Add event listener for mouseleave on the navigation bar
             navBar.addEventListener('mouseleave', () => {
                 updateBubblePosition(selectedTab);
             });
 
-            // Recalculate bubble position on window resize for responsiveness
+            learnMoreBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                const aboutNavButton = document.querySelector('.nav-button[data-tab-name="about"]');
+                if (aboutNavButton) {
+                    if (selectedTab) {
+                        selectedTab.classList.remove('selected');
+                    }
+                    selectedTab = aboutNavButton;
+                    selectedTab.classList.add('selected');
+                    updateBubblePosition(selectedTab);
+                }
+                scrollToSection('about');
+            });
+
+            // --- Infinite Carousel Logic ---
+            const CARD_COUNT = serviceCardItems.length;
+            const CLONE_COUNT = CARD_COUNT; 
+            let isScrolling;
+
+            function setupInfiniteScroll() {
+                const currentClones = serviceCardsContainer.querySelectorAll('.service-card-item.cloned');
+                currentClones.forEach(clone => clone.remove());
+                serviceCardItems = Array.from(document.querySelectorAll('.service-card-item:not(.cloned)'));
+                
+                for (let i = 0; i < CLONE_COUNT; i++) {
+                    const clone = serviceCardItems[CARD_COUNT - 1 - i].cloneNode(true);
+                    clone.classList.add('cloned');
+                    serviceCardsContainer.prepend(clone);
+                }
+
+                for (let i = 0; i < CLONE_COUNT; i++) {
+                    const clone = serviceCardItems[i].cloneNode(true);
+                    clone.classList.add('cloned');
+                    serviceCardsContainer.appendChild(clone);
+                }
+
+                serviceCardItems = Array.from(document.querySelectorAll('.service-card-item'));
+
+                const initialScrollPosition = serviceCardItems[CLONE_COUNT].offsetLeft;
+                serviceCardsContainer.scrollLeft = initialScrollPosition;
+            }
+
+            function handleInfiniteScroll() {
+                const scrollLeft = serviceCardsContainer.scrollLeft;
+                const cardWidthWithGap = serviceCardItems[CLONE_COUNT].offsetWidth + 20;
+
+                if (scrollLeft >= serviceCardItems[CLONE_COUNT * 2].offsetLeft) {
+                    serviceCardsContainer.scrollLeft = serviceCardItems[CLONE_COUNT].offsetLeft;
+                } 
+                else if (scrollLeft <= 0) {
+                    const lastOriginalCardIndex = CLONE_COUNT * 2 -1; 
+                    const targetScrollLeft = serviceCardItems[lastOriginalCardIndex].offsetLeft - (serviceCardsContainer.offsetWidth - serviceCardItems[lastOriginalCardIndex].offsetWidth - 20) ; 
+                    serviceCardsContainer.scrollLeft = targetScrollLeft;
+                }
+            }
+
+            // Scroll with arrows
+            scrollLeftBtn.addEventListener('click', () => {
+                const cardWidth = serviceCardItems[CLONE_COUNT].offsetWidth;
+                const gap = 20;
+                serviceCardsContainer.scrollBy({
+                    left: -(cardWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+
+            scrollRightBtn.addEventListener('click', () => {
+                const cardWidth = serviceCardItems[CLONE_COUNT].offsetWidth;
+                const gap = 20;
+                serviceCardsContainer.scrollBy({
+                    left: (cardWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+
+            serviceCardsContainer.addEventListener('scroll', () => {
+                window.clearTimeout(isScrolling);
+                isScrolling = setTimeout(() => {
+                    handleInfiniteScroll();
+                }, 66);
+            });
+
+            setupInfiniteScroll();
             window.addEventListener('resize', () => {
                 updateBubblePosition(selectedTab);
+                setupInfiniteScroll();
+            });
+
+            // --- Intersection Observer for Nav Bubble on Scroll ---
+            const sectionObserverOptions = {
+                root: null, // relative to the viewport
+                rootMargin: '-100px 0px -100px 0px', // A "hot zone" in the middle of the viewport, adjusted for header
+                threshold: 0.6 // Changed to 0.6 to activate when 60% of the section is visible
+            };
+
+            const sectionObserverCallback = (entries) => {
+                let currentActiveSectionId = null;
+                let maxRatio = 0;
+
+                entries.forEach(entry => {
+                    // Find the section that is most visible (highest intersectionRatio) or closest to the top
+                    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        currentActiveSectionId = entry.target.id;
+                    }
+                });
+
+                if (currentActiveSectionId) {
+                    const activeNavTabName = currentActiveSectionId.replace('-section', '');
+                    const correspondingNavButton = document.querySelector(`.nav-button[data-tab-name="${activeNavTabName}"]`);
+                    
+                    if (correspondingNavButton && correspondingNavButton !== selectedTab) {
+                        if (selectedTab) {
+                            selectedTab.classList.remove('selected');
+                        }
+                        selectedTab = correspondingNavButton;
+                        selectedTab.classList.add('selected');
+                        updateBubblePosition(selectedTab);
+                    }
+                }
+            };
+
+            const sectionObserver = new IntersectionObserver(sectionObserverCallback, sectionObserverOptions);
+
+            // Observe each relevant content section
+            sections.forEach(section => {
+                if (section.element) {
+                    sectionObserver.observe(section.element);
+                }
             });
         });
     </script>
