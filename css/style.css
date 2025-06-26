@@ -3,19 +3,17 @@ body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     min-height: 200vh; /* Make body taller than viewport to enable scrolling */
-    /* Background image - now scrollable */
-    background-image: url('images/bg1.jpg'); /* Generic placeholder background */
+    background-image: url('images/jean-philippe-delberghe-75xPHEQBmvA-unsplash.jpg');
     background-size: cover; /* Cover the entire background */
     background-position: center; /* Center the background image */
     background-attachment: scroll; /* Allow background to scroll */
     background-repeat: no-repeat; /* Do not repeat the image */
-    background-color: #ffffff; /* Fallback background color */
+    background-color: #cfcfcf; /* Fallback background color */
     color: black; /* Text is now black at all times */
 }
 
 /* CSS for the Liquid Glass element */
 .liquid-glass-element {
-    /* Dimensions and basic shape */
     height: 80px; /* Reduced height to make it thinner */
     border-radius: 40px; /* Increased border-radius for larger curve */
     overflow: hidden; /* Important for the blur to work within the element */
@@ -27,7 +25,6 @@ body {
     box-sizing: border-box; /* Include padding in width/height */
     gap: 20px; /* Space between logo and nav links wrapper */
     
-    /* Pinned positioning at the top - Using fixed positioning for constant visibility */
     position: fixed !important; /* Forces fixed positioning */
     top: 20px !important;       /* Stays 20px from the top */
     left: 50%;                  /* Centers horizontally */
@@ -36,18 +33,12 @@ body {
     max-width: 800px;           /* Max width */
     z-index: 100;               /* Ensure it's above other content */
 
-    /* Reduced blur and adjusted background */
     background-color: rgba(255, 255, 255, 0.2); /* Slightly increased opacity */
     backdrop-filter: blur(10px); /* Reduced blur from 20px to 10px */
     -webkit-backdrop-filter: blur(10px); /* For Safari support */
 
-    /* Very thin white border */
     border: 0.5px solid rgba(255, 255, 255, 0.7); /* Thinner and more visible white border */
-
-    /* Shadow for depth */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-
-    /* Specular Highlights (Simulated with a gradient overlay or pseudo-element) */
 }
 
 /* Logo styling */
@@ -159,7 +150,7 @@ body {
     align-items: flex-start; /* Align item to the top of the section */
     width: 100%; /* Now spans full width */
     max-width: none; /* Removed max-width constraint */
-    padding: 0 20px; /* Add horizontal padding to prevent content from touching edges */
+    padding: 0; /* Removed horizontal padding */
     box-sizing: border-box; /* Include padding in width */
     margin-top: 120px; /* Positioned directly after fixed header + gap */
     margin-bottom: 40px; /* Add margin to bottom of the section */
@@ -176,7 +167,7 @@ body {
     border: 0.5px solid rgba(255, 255, 255, 0.7); /* Matching glass border */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Matching glass shadow */
     border-radius: 40px; /* Matching border-radius */
-    padding: 30px; /* Internal padding */
+    padding: 150px; /* Internal padding changed to 150px */
     box-sizing: border-box; /* Include padding in width/height */
     color: black; /* Text color */
     
@@ -190,20 +181,288 @@ body {
     overflow-y: auto; /* Add scroll for content if it exceeds height */
 
     /* Customisable text sizes */
-    --h2-font-size: 1.8rem; /* Default H2 font size */
-    --h3-font-size: 1rem;   /* Default H3 font size */
+    --h2-font-size: 3.5rem; /* Default H2 font size */
+    --h3-font-size: 1.2rem;   /* Default H3 font size */
+
+    /* Background image for the card (only for home-section) */
+    background-image: url('images/christopher-gower-vjMgqUkS8q8-unsplash.jpg'); /* Placeholder image */
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the background image */
+    position: relative; /* Needed for pseudo-element positioning */
+    z-index: 0; /* Ensure it's behind pseudo-elements */
+}
+
+/* Specific styles for Services card, Portfolio card, About Us card and Contact card (new) */
+#services-section .glass-card,
+#works-section .glass-card,
+#about-us-section .glass-card, 
+#contact-section .glass-card { 
+    background-image: none; /* Removed background image */
+    background-color: rgba(255, 255, 255, 0.2); /* Matching background color */
+    backdrop-filter: blur(10px); /* Matching blur */
+    -webkit-backdrop-filter: blur(10px); /* Matching webkit blur */
+    padding: 80px; /* Increased padding to 80px */
+    align-items: flex-start; /* Align content to top-left for title/description, then center scrollable cards */
+    position: relative; /* For absolute positioning of arrows */
+}
+
+#works-section .glass-card,
+#about-us-section .glass-card, 
+#contact-section .glass-card { /* Centered content for works, about us and contact cards */
+    justify-content: center;
+    align-items: center;
+}
+
+#services-section .glass-card::after,
+#works-section .glass-card::after,
+#about-us-section .glass-card::after, 
+#contact-section .glass-card::after { 
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 40px; /* Match parent's border-radius */
+    background-color: rgba(255, 255, 255, 0.2); /* Same as liquid-glass-element background-color */
+    backdrop-filter: blur(10px); /* Same as liquid-glass-element blur */
+    -webkit-backdrop-filter: blur(10px);
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: 0; /* Behind other content but above the image */
+    display: none; /* Hide this pseudo-element */
+}
+
+#services-section .glass-card .text-content-wrapper,
+#works-section .glass-card .text-content-wrapper,
+#about-us-section .glass-card .text-content-wrapper, 
+#contact-section .glass-card .text-content-wrapper { 
+    width: 100%; /* Full width for text wrapper inside cards */
+    text-align: center; /* Center text within the services card */
+    margin-bottom: 20px; /* Space between text and scrollable cards */
+    position: relative; /* Ensure text is above the blur overlay */
+    z-index: 1; /* Place text above the blur overlay */
+}
+
+#works-section .glass-card .text-content-wrapper,
+#about-us-section .glass-card .text-content-wrapper, 
+#contact-section .glass-card .text-content-wrapper { 
+    margin-bottom: 0; /* No margin bottom needed if it's the only text content */
+}
+
+
+#services-section .glass-card h2,
+#services-section .glass-card h3,
+#works-section .glass-card h2,
+#works-section .glass-card h3,
+#about-us-section .glass-card h2, 
+#about-us-section .glass-card p, 
+#contact-section .glass-card h2, 
+#contact-section .glass-card h3 { 
+    text-align: center; /* Center align headings in all cards */
+}
+
+/* Increase font size for "Coming Soon" */
+#works-section .glass-card h3 {
+    font-size: 2rem; /* Increased font size */
+    font-weight: 600; /* Made it bolder for prominence */
+    margin-top: 20px; /* Added some top margin for spacing */
+}
+
+/* Specific styling for About Us paragraph within the glass card */
+#about-us-section .glass-card p {
+    line-height: 1.8;
+    font-size: 1.1rem;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+    margin-bottom: 1rem; /* Adjust as needed for spacing between paragraphs */
+}
+#about-us-section .glass-card p:last-child {
+    margin-bottom: 0; /* Remove bottom margin for the last paragraph */
+}
+
+/* Specific styling for contact details */
+/* ===== Contact Section Alignment Fix ===== */
+
+#contact-section .glass-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;       /* Align content to the left */
+    justify-content: flex-start;   /* Align content to the top */
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.5px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
+    padding: 40px;
+    box-sizing: border-box;
+    color: black;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+/* Center only the heading */
+#contact-section .glass-card h2 {
+    text-align: center;
+    width: 100%;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Align the contact details to the left */
+#contact-section .glass-card .text-content-wrapper {
+    width: 100%;
+    text-align: left;
+}
+
+/* Style individual contact lines */
+#contact-section .glass-card p {
+    font-size: 1.1rem;
+    text-align: left;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Styling for horizontally scrollable service cards */
+.service-cards-container {
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    overflow-x: hidden; /* Hide scrollbar completely and prevent user scrolling */
+    gap: 20px; /* Space between cards */
+    padding: 20px 0; /* Only vertical padding */
+    width: 100%; /* Take full width of parent's content box */
+    margin: 0 -10px; /* Half of the gap value to align cards flush */
+    justify-content: flex-start; /* Align items to the start for scrolling */
+    align-items: center; /* Align to center within the container */
+    scroll-snap-type: x mandatory; /* Snap to cards when scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+
+    /* Hide scrollbar completely */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+
+    position: relative; /* Keep relative for containing elements if needed */
+    z-index: 1; /* Ensure container is above the blur overlay */
+    transition: transform 0.5s ease-in-out; /* Smooth transition for automated scrolling */
+}
+
+/* Hide scrollbar for Webkit browsers */
+.service-cards-container::-webkit-scrollbar {
+    display: none;
+}
+
+.service-card-item {
+    flex-shrink: 0; /* Prevent cards from shrinking */
+    /* Calculate width to precisely fit 3 cards and 2 gaps within the container's width */
+    width: calc((100% - (2 * 20px)) / 3); /* 20px gap between items */
+    height: 250px; /* Height for service card items */
+    background-color: transparent;
+    backdrop-filter: none; 
+    -webkit-backdrop-filter: none; 
+    border: 0.5px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; /* Rounded corners for smaller cards */
+    padding: 40px; /* Increased padding to 40px */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally within card */
+    justify-content: center; /* Center content vertically within card */
+    text-align: center; /* Center text within card */
+    color: black;
+    scroll-snap-align: start; /* Snap cards to start for consistent 3-card view */
+    transition: none; 
+}
+
+.service-card-item h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.service-card-item p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Navigation Arrows for Service Cards */
+.scroll-arrow {
+    position: absolute;
+    top: auto; /* Reset top */
+    bottom: 40px; /* Position at the bottom of the service card container */
+    transform: translateY(0); /* Reset transform */
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 0.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10; /* Above cards and overlay */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.scroll-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1); /* Only scale, no translateY */
+}
+.scroll-arrow:active {
+    transform: scale(0.95); /* Only scale, no translateY */
+}
+
+.scroll-arrow.left {
+    left: 80px; /* Aligned with the glass-card's internal padding */
+}
+
+.scroll-arrow.right {
+    right: 80px; /* Aligned with the glass-card's internal padding */
+}
+
+.scroll-arrow svg {
+    width: 20px;
+    height: 20px;
+    fill: black; /* Arrow color */
+}
+
+/* Pseudo-element for gradual blur on the left half (only for home card) */
+#home-section .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Cover the entire card horizontally */
+    height: 100%; /* Cover the entire card vertically */
+    background: transparent; /* This background is just a placeholder for the blur filter */
+    backdrop-filter: blur(15px); /* Apply blur to the pseudo-element's background */
+    -webkit-backdrop-filter: blur(15px);
+    /* Mask to apply blur gradually from left to right */
+    mask-image: linear-gradient(to right, black 50%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
+    z-index: 1; /* Position above the background image, but below text content */
+    pointer-events: none; /* Allow interaction with elements below */
+    border-radius: 40px; /* Match card border-radius for smooth edges */
 }
 
 /* Wrapper for text content within the glass card */
 .text-content-wrapper {
     width: 50%; /* Text content spans left 50% of the card */
     box-sizing: border-box; /* Include padding in width */
+    position: relative; /* Ensure text is above the blur pseudo-element */
+    z-index: 2; /* Place text above the blurred pseudo-element */
 }
 
 .glass-card h2 {
     font-size: var(--h2-font-size); /* Using custom property */
     font-weight: 700;
-    margin-bottom: 15px;
+    margin-bottom: 0; /* Decreased margin-bottom to reduce space between H2 lines */
+    line-height: 1.1; /* Decreased line-height for closer H2 lines */
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
     text-align: left; /* Ensure text inside H2 is left-aligned */
     width: 100%; /* Ensure H2 takes full available width inside its parent */
@@ -216,8 +475,68 @@ body {
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
     text-align: left; /* Ensure text inside H3 is left-aligned */
     width: 100%; /* Ensure H3 takes full available width inside its parent */
+    margin-bottom: 25px; /* Increased margin-bottom to create more gap */
 }
 
+/* Learn More button styling */
+.learn-more-button {
+    display: inline-block; /* Allows padding and margin */
+    padding: 10px 25px; /* Padding similar to nav buttons but a bit larger */
+    border-radius: 30px; /* Rounded corners */
+    background-color: rgba(255, 255, 255, 0.3); /* Slightly more opaque glass */
+    backdrop-filter: blur(8px); /* Less blur than main elements for subtle difference */
+    -webkit-backdrop-filter: blur(8px);
+    border: 0.5px solid rgba(255, 255, 255, 0.8); /* Slightly more prominent border */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    color: black; /* Black text */
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 50px; /* Space above the button */
+    white-space: nowrap; /* Prevent text wrap */
+}
+
+.learn-more-button:hover {
+    background-color: black; /* Inverted background color */
+    color: white; /* Inverted text color */
+    border-color: rgba(0, 0, 0, 0.8); /* Inverted border color for consistency */
+    transform: none; /* Static, no popping up */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Adjusted shadow for inverted state */
+}
+
+.learn-more-button:active {
+    transform: none; /* Static, no popping up */
+    background-color: rgba(0, 0, 0, 0.8); /* Slightly darker active state */
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* About Us Section styling */
+#about-us-section .glass-card { 
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.5px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
+    padding: 40px; /* Generous padding */
+    box-sizing: border-box;
+    color: black;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    text-align: center; /* Center the text for this section */
+    justify-content: center; /* Center content vertically within the card */
+    align-items: center; /* Center content horizontally within the card */
+}
+
+#about-us-section .glass-card h2 { 
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
@@ -247,9 +566,28 @@ body {
         min-width: auto; /* Allow auto width on mobile */
         border-radius: 30px; /* Match responsive border-radius */
         height: auto; /* Allow height to be auto on mobile when stacked */
-        padding: 20px;
+        padding: 20px; /* Adjust padding for mobile */
         justify-content: flex-start; /* Reset vertical alignment for mobile */
         align-items: flex-start; /* Reset horizontal alignment for mobile */
+        background-image: none; /* Remove image on small screens */
+    }
+    #services-section .glass-card,
+    #works-section .glass-card,
+    #about-us-section .glass-card, 
+    #contact-section .glass-card { 
+        padding: 40px; /* Adjusted padding for mobile */
+        justify-content: center; /* Center content for mobile */
+        align-items: center; /* Center content for mobile */
+    }
+    #services-section .glass-card::after,
+    #works-section .glass-card::after,
+    #about-us-section .glass-card::after, 
+    #contact-section .glass-card::after { 
+        border-radius: 30px; /* Match responsive border-radius */
+        display: none; /* Keep hidden for services card */
+    }
+    .glass-card::before {
+        display: none; /* Hide the blur pseudo-element on small screens */
     }
     .text-content-wrapper {
         width: 100%; /* Text content spans full width on mobile */
@@ -257,8 +595,48 @@ body {
     .glass-card h2 {
         font-size: 1.5rem; /* Specific font size for mobile H2 */
         width: auto; /* Allow auto width on mobile */
+        margin-bottom: 10px; /* Adjust margin for mobile */
+        line-height: 1.2; /* Adjust line-height for mobile */
     }
-    .glass-card h3 {
-        width: auto; /* Allow auto width on mobile */
+    #works-section .glass-card h3 {
+        font-size: 1.5rem; /* Adjust for mobile */
+    }
+    #contact-section .glass-card p {
+        font-size: 1rem; /* Adjust for mobile */
+    }
+    .learn-more-button {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+        margin-top: 15px;
+    }
+    #about-us-section .glass-card h2 { 
+        font-size: 2rem;
+    }
+    #about-us-section .glass-card p { 
+        font-size: 1rem;
+    }
+    .service-cards-container {
+        padding: 10px 0; /* No horizontal padding, as per desktop */
+        margin: 0 -10px; /* Adjust for gap on mobile */
+        width: 100%; /* Fill container */
+    }
+    .service-card-item {
+        width: calc((100% - (0 * 20px)) / 1); /* Show 1 card at once on mobile, no gaps between for single card view */
+        height: 300px; /* Adjust height for mobile service cards */
+        padding: 20px; /* Adjusted padding for mobile service cards */
+    }
+    .scroll-arrow {
+        width: 30px;
+        height: 30px;
+    }
+    .scroll-arrow svg {
+        width: 15px;
+        height: 15px;
+    }
+    .scroll-arrow.left {
+        left: 40px; /* Adjusted for mobile */
+    }
+    .scroll-arrow.right {
+        right: 40px; /* Adjusted for mobile */
     }
 }
