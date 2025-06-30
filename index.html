@@ -1002,17 +1002,17 @@
                         <p><strong>Email:</strong> trenditionagency@gmail.com</p>
                     </div>
                     <div class="contact-form-container">
-                        <form class="contact-form" action="mailto:trenditionagency@gmail.com" method="post" enctype="text/plain">
-                            <label for="name">Name:</label>
-                            <input type="text" id="name" name="name" required placeholder="Your Name">
+                        <form class="contact-form" action="https://formspree.io/f/xblywgwv" method="POST">
+                            <label for="name">Your Name:</label>
+                            <input type="text" id="name" name="name" required>
                             
-                            <label for="email">E-mail:</label>
-                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                            
-                            <label for="query">Query:</label>
-                            <textarea id="query" name="query" rows="5" required placeholder="Tell us about your project or question..."></textarea>
-                            
-                            <button type="submit">Send Message</button>
+                            <label for="email">Your Email:</label>
+                            <input type="email" id="email" name="email" required>
+
+                            <label for="message">Your Message:</label>
+                            <textarea id="message" name="message" placeholder="Type your query here..." required></textarea>
+
+                            <button type="submit">Send</button>
                         </form>
                     </div>
                 </div>
