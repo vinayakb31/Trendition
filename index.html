@@ -21,9 +21,10 @@
             background-repeat: no-repeat; /* Do not repeat the image */
             background-color: #cfcfcf; /* Fallback background color */
             color: black; /* Text is now black at all times */
+            overflow-x: hidden; /* Prevent horizontal scroll when mobile menu is open */
         }
 
-        /* CSS for the Liquid Glass element */
+        /* CSS for the Liquid Glass element (main navigation bar) */
         .liquid-glass-element {
             height: 80px; /* Reduced height to make it thinner */
             border-radius: 40px; /* Increased border-radius for larger curve */
@@ -137,6 +138,80 @@
             color: black; /* Ensure text is black for selected state */
             text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3); /* Adjust text shadow for clarity on white */
         }
+
+        /* Hamburger menu icon */
+        .hamburger-menu-icon {
+            display: none; /* Hidden by default on desktop */
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 101; /* Above the liquid-glass-element */
+            margin-right: 20px; /* Align to the right side of the nav bar */
+            position: absolute;
+            right: 20px;
+        }
+
+        .hamburger-menu-icon svg {
+            fill: black;
+        }
+
+        /* Mobile navigation menu */
+        .mobile-nav-menu {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 99; /* Below main nav bar but above content */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .mobile-nav-menu.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-menu a {
+            color: black;
+            font-size: 1.8rem;
+            padding: 15px 0;
+            text-decoration: none;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.2s ease;
+            border-radius: 10px;
+        }
+
+        .mobile-nav-menu a:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Close button for mobile menu */
+        .close-menu-button {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 102; /* Above the mobile menu */
+        }
+
+        .close-menu-button svg {
+            fill: black;
+        }
+
 
         /* General content styling for scrollable areas - NO MORE DARK CARDS */
         .placeholder-text {
@@ -265,6 +340,131 @@
             box-sizing: border-box;
         }
 
+        /* Contact form specific styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%; /* Adjust form width within its container */
+            max-width: 400px; /* Max width for readability */
+            gap: 15px; /* Space between form elements */
+            margin-top: 0; /* Removed margin-top as it's now inside flex column */
+        }
+
+        .contact-form label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: black;
+            text-align: left; /* Align labels to the left */
+            width: 100%; /* Ensure label spans full width */
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 15px; /* Slightly rounded corners for inputs */
+            border: 0.5px solid rgba(255, 255, 255, 0.7); /* Light border */
+            background-color: rgba(255, 255, 255, 0.4); /* Semi-transparent background */
+            color: black;
+            font-size: 1rem;
+            outline: none; /* Remove outline on focus */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form input[type="text"]:focus,
+        .contact-form input[type="email"]:focus,
+        .contact-form textarea:focus {
+            border-color: rgba(0, 0, 0, 0.5); /* Darker border on focus */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* More prominent shadow on focus */
+        }
+
+        .contact-form textarea {
+            min-height: 100px; /* Minimum height for textarea */
+            resize: vertical; /* Allow vertical resizing only */
+        }
+
+        .contact-form button[type="submit"] {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.5); /* Slightly more opaque glass for button */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 0.5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color: black;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 15px; /* Space above the button */
+            white-space: nowrap;
+            align-self: center; /* Center the button within the form */
+        }
+
+        .contact-form button[type="submit"]:hover {
+            background-color: black;
+            color: white;
+            border-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .contact-form button[type="submit"]:active {
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* New styles for horizontal layout within Contact Us card */
+        .contact-layout-wrapper {
+            display: flex;
+            flex-direction: row; /* Horizontal layout by default */
+            width: 100%;
+            flex-grow: 1; /* Allow it to take up remaining vertical space */
+            justify-content: center; /* Center the contact details and form columns */
+            align-items: center; /* Vertically center the two columns */
+            gap: 20px; /* Decreased gap between the two columns */
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center details vertically within its column */
+            align-items: flex-start; /* Left align text within its column */
+            flex: 1; /* Allow to grow and shrink */
+            padding-right: 20px; /* Add some padding to the right of the details */
+            text-align: left; /* Ensure text is left-aligned */
+            height: 100%; /* Take full height of its parent */
+        }
+
+        .contact-details h3 {
+            text-align: left !important; /* Ensure the h3 inside contact-details is left-aligned */
+            margin-bottom: 10px; /* Add some space below the h3 */
+        }
+
+        .contact-details p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px; /* Space between contact lines */
+            text-align: left; /* Override general centering for paragraphs */
+            width: 100%; /* Ensure paragraphs take full width */
+        }
+        .contact-details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-form-container {
+            flex: 1; /* Allow to grow and shrink */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center the form */
+            align-items: center; /* Horizontally center the form within its column */
+            padding-left: 20px; /* Add some padding to the left of the form */
+            height: 100%; /* Take full height of its parent */
+        }
+
 
         #services-section .glass-card h2,
         #services-section .glass-card h3,
@@ -306,16 +506,6 @@
         }
         #about-us-section .glass-card p:last-child {
             margin-bottom: 0; /* Remove bottom margin for the last paragraph (overridden by general rule) */
-        }
-
-        /* Specific styling for contact details */
-        #contact-section .glass-card p {
-            font-size: 1.1rem;
-            /* Margin bottom for contact paragraphs, removed by general rule above */
-            /* margin-bottom: 10px; */
-            line-height: 1.5;
-            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-            text-align: center; /* Ensure paragraphs are centered in Contact */
         }
 
 
@@ -485,14 +675,14 @@
             padding: 10px 25px; /* Padding similar to nav buttons but a bit larger */
             border-radius: 30px; /* Rounded corners */
             background-color: rgba(255, 255, 255, 0.3); /* Slightly more opaque glass */
-            backdrop-filter: blur(8px); /* Less blur than main elements for subtle difference */
+            backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 0.5px solid rgba(255, 255, 255, 0.8); /* Slightly more prominent border */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            color: black; /* Black text */
+            border: 0.5px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color: black;
             font-size: 1rem;
             font-weight: 500;
-            text-decoration: none; /* Remove underline */
+            text-decoration: none;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             margin-top: 50px; /* Space above the button */
@@ -500,21 +690,81 @@
         }
 
         .learn-more-button:hover {
-            background-color: black; /* Inverted background color */
-            color: white; /* Inverted text color */
-            border-color: rgba(0, 0, 0, 0.8); /* Inverted border color for consistency */
-            transform: none; /* Static, no popping up */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Adjusted shadow for inverted state */
+            background-color: black;
+            color: white;
+            border-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .learn-more-button:active {
-            transform: none; /* Static, no popping up */
-            background-color: rgba(0, 0, 0, 0.8); /* Slightly darker active state */
-            color: white;
+            transform: none;
+            background-color: rgba(0, 0, 0, 0.8);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
         /* Responsive adjustments */
+        @media (max-width: 900px) { /* Adjust breakpoint for contact form */
+            .contact-layout-wrapper {
+                flex-direction: column; /* Stack columns vertically on smaller screens */
+                gap: 20px; /* Adjust gap for stacked items */
+            }
+            .contact-details, .contact-form-container {
+                width: 100%; /* Full width when stacked */
+                padding: 0; /* Remove padding when stacked */
+                align-items: center; /* Center content when stacked */
+                text-align: center; /* Center text when stacked */
+            }
+            .contact-details p, .contact-details h3 { /* Apply to both p and h3 */
+                text-align: center; /* Center text when stacked on mobile */
+            }
+            .contact-form {
+                max-width: 100%; /* Allow form to take full width on mobile */
+            }
+            .contact-form label {
+                text-align: center; /* Center label when stacked */
+            }
+        }
+
+        @media (max-width: 768px) { /* New breakpoint for mobile menu */
+            .liquid-glass-element {
+                justify-content: space-between; /* Space out logo and hamburger */
+                padding: 0 20px; /* Adjust padding for mobile */
+            }
+            .nav-links-wrapper {
+                display: none; /* Hide regular navigation links */
+            }
+            .hamburger-menu-icon {
+                display: block; /* Show hamburger icon */
+            }
+            .moving-bubble {
+                display: none; /* Hide the moving bubble on mobile */
+            }
+            /* Adjustments for content sections on mobile to prevent overflow from hamburger menu */
+            .content-section {
+                margin-top: 100px; /* Adjust top margin for content below mobile header */
+            }
+
+            .glass-card {
+                padding: 30px; /* Reduce card padding on mobile */
+                height: auto; /* Allow height to adjust */
+            }
+            /* Ensure text-content-wrapper also takes full width and centers its content */
+            .text-content-wrapper {
+                width: 100%;
+                text-align: center;
+            }
+            .glass-card h2, .glass-card h3 {
+                text-align: center; /* Center headings on mobile */
+                width: 100%;
+            }
+            .contact-details h3 {
+                text-align: center !important; /* Force center for contact h3 on small screens */
+            }
+            .contact-details p {
+                text-align: center !important; /* Force center for contact paragraphs on small screens */
+            }
+        }
+
         @media (max-width: 640px) {
             .liquid-glass-element {
                 height: 60px; /* Adjust height for smaller screens */
@@ -578,9 +828,6 @@
             #works-section .glass-card h3 {
                 font-size: 1.5rem; /* Adjust for mobile */
             }
-            #contact-section .glass-card p {
-                font-size: 1rem; /* Adjust for mobile */
-            }
             .learn-more-button {
                 padding: 8px 20px;
                 font-size: 0.9rem;
@@ -632,7 +879,27 @@
             <a href="#" class="nav-button" data-tab-name="about-us">About</a>
             <a href="#" class="nav-button" data-tab-name="contact">Contact</a>
         </div>
+        <!-- Hamburger menu icon (visible on mobile) -->
+        <div class="hamburger-menu-icon" id="hamburgerMenuIcon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </div>
         <span class="moving-bubble" id="movingBubble"></span>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav-menu" id="mobileNavMenu">
+        <div class="close-menu-button" id="closeMenuButton">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"/>
+            </svg>
+        </div>
+        <a href="#" class="mobile-nav-button" data-tab-name="home">Home</a> 
+        <a href="#" class="mobile-nav-button" data-tab-name="services">Services</a>
+        <a href="#" class="mobile-nav-button" data-tab-name="works">Portfolio</a>
+        <a href="#" class="mobile-nav-button" data-tab-name="about-us">About</a>
+        <a href="#" class="mobile-nav-button" data-tab-name="contact">Contact</a>
     </div>
 
     <div class="content-section" id="home-section">
@@ -718,9 +985,27 @@
                 <h2>Contact Us</h2>
             </div>
             <div class="main-content-area">
-                <h3>Have a project in mind? Reach out to us through the details below. We're always eager to discuss how we can help your brand succeed.</h3>
-                <p><strong>Phone:</strong> +91 96745 58449</p>
-                <p><strong>Email:</strong> trenditionagency@gmail.com</p>
+                <div class="contact-layout-wrapper">
+                    <div class="contact-details">
+                        <h3>Have a project in mind? Reach out to us through the details below. We're always eager to discuss how we can help your brand succeed.</h3>
+                        <p><strong>Phone:</strong> +91 96745 58449</p>
+                        <p><strong>Email:</strong> trenditionagency@gmail.com</p>
+                    </div>
+                    <div class="contact-form-container">
+                        <form class="contact-form" action="mailto:trenditionagency@gmail.com" method="post" enctype="text/plain">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required placeholder="Your Name">
+                            
+                            <label for="email">E-mail:</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                            
+                            <label for="query">Query:</label>
+                            <textarea id="query" name="query" rows="5" required placeholder="Tell us about your project or question..."></textarea>
+                            
+                            <button type="submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -747,12 +1032,19 @@
             
             let selectedTab = document.querySelector('.nav-button.selected');
 
+            // Mobile menu elements
+            const hamburgerMenuIcon = document.getElementById('hamburgerMenuIcon');
+            const mobileNavMenu = document.getElementById('mobileNavMenu');
+            const closeMenuButton = document.getElementById('closeMenuButton');
+            const mobileNavButtons = document.querySelectorAll('.mobile-nav-button');
+
+
             // Define your sections and their corresponding nav data-tab-name
             const sections = [
                 { element: document.getElementById('home-section'), navTab: 'home' },
                 { element: document.getElementById('services-section'), navTab: 'services' },
                 { element: document.getElementById('works-section'), navTab: 'works' }, 
-                { element: document.getElementById('about-us-section'), navTab: 'about' },
+                { element: document.getElementById('about-us-section'), navTab: 'about-us' }, // Updated data-tab-name
                 { element: document.getElementById('contact-section'), navTab: 'contact' }, 
             ];
 
@@ -831,7 +1123,7 @@
 
             learnMoreBtn.addEventListener('click', (event) => {
                 event.preventDefault();
-                const aboutNavButton = document.querySelector('.nav-button[data-tab-name="about"]');
+                const aboutNavButton = document.querySelector('.nav-button[data-tab-name="about-us"]'); // Updated data-tab-name
                 if (aboutNavButton) {
                     if (selectedTab) {
                         selectedTab.classList.remove('selected');
@@ -842,6 +1134,36 @@
                 }
                 scrollToSection('about-us');
             });
+
+            // --- Mobile Menu Event Listeners ---
+            hamburgerMenuIcon.addEventListener('click', () => {
+                mobileNavMenu.classList.add('open');
+            });
+
+            closeMenuButton.addEventListener('click', () => {
+                mobileNavMenu.classList.remove('open');
+            });
+
+            mobileNavButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    mobileNavMenu.classList.remove('open'); // Close menu on click
+                    const targetTabName = event.currentTarget.dataset.tabName;
+                    scrollToSection(targetTabName);
+
+                    // Update desktop nav bubble and selected state if visible
+                    const correspondingDesktopNavButton = document.querySelector(`.nav-button[data-tab-name="${targetTabName}"]`);
+                    if (correspondingDesktopNavButton && window.innerWidth > 768) { // Only if desktop nav is visible
+                        if (selectedTab) {
+                            selectedTab.classList.remove('selected');
+                        }
+                        selectedTab = correspondingDesktopNavButton;
+                        selectedTab.classList.add('selected');
+                        updateBubblePosition(selectedTab);
+                    }
+                });
+            });
+
 
             // --- Infinite Carousel Logic ---
             const CARD_COUNT = serviceCardItems.length;
@@ -940,7 +1262,7 @@
                     const activeNavTabName = currentActiveSectionId.replace('-section', '');
                     const correspondingNavButton = document.querySelector(`.nav-button[data-tab-name="${activeNavTabName}"]`);
                     
-                    if (correspondingNavButton && correspondingNavButton !== selectedTab) {
+                    if (correspondingNavButton && window.innerWidth > 768 && correspondingNavButton !== selectedTab) { // Only update if desktop nav is visible
                         if (selectedTab) {
                             selectedTab.classList.remove('selected');
                         }
