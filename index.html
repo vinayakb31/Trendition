@@ -149,17 +149,38 @@
             margin-right: 20px; /* Align to the right side of the nav bar */
             position: absolute;
             right: 20px;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 5px; /* Add padding for click area */
         }
 
-        .hamburger-menu-icon svg {
-            fill: black;
+        .hamburger-menu-icon .line {
+            width: 24px;
+            height: 2px;
+            background-color: black;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger-menu-icon.is-active .line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger-menu-icon.is-active .line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu-icon.is-active .line:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
         }
 
         /* Mobile navigation menu */
         .mobile-nav-menu {
-            display: none; /* Hidden by default */
+            /* Keep display: flex by default, but control visibility with opacity and visibility */
             position: fixed;
             top: 0;
+            padding-top: 100px;
             left: 0;
             width: 100%;
             height: 100%;
@@ -174,6 +195,7 @@
             box-sizing: border-box;
             opacity: 0;
             visibility: hidden;
+            /* Added transition for display property (needs JS to work smoothly) */
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
@@ -181,6 +203,9 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Hide the mobile menu by default and display it only when open - this part is now controlled by JS */
+        /* .mobile-nav-menu:not(.open) { display: none; } */
 
         .mobile-nav-menu a {
             color: black;
@@ -197,19 +222,9 @@
             background-color: rgba(0, 0, 0, 0.1);
         }
 
-        /* Close button for mobile menu */
+        /* Close button for mobile menu - this will be controlled by hamburger icon now */
         .close-menu-button {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            z-index: 102; /* Above the mobile menu */
-        }
-
-        .close-menu-button svg {
-            fill: black;
+            display: none; /* Hide this as hamburger icon handles close */
         }
 
 
@@ -734,7 +749,7 @@
                 display: none; /* Hide regular navigation links */
             }
             .hamburger-menu-icon {
-                display: block; /* Show hamburger icon */
+                display: flex; /* Show hamburger icon (flex to center lines) */
             }
             .moving-bubble {
                 display: none; /* Hide the moving bubble on mobile */
@@ -881,20 +896,15 @@
         </div>
         <!-- Hamburger menu icon (visible on mobile) -->
         <div class="hamburger-menu-icon" id="hamburgerMenuIcon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-            </svg>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
         </div>
         <span class="moving-bubble" id="movingBubble"></span>
     </div>
 
     <!-- Mobile Navigation Menu -->
-    <div class="mobile-nav-menu" id="mobileNavMenu">
-        <div class="close-menu-button" id="closeMenuButton">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"/>
-            </svg>
-        </div>
+    <div class="mobile-nav-menu" id="mobileNavMenu" style="display: none;">
         <a href="#" class="mobile-nav-button" data-tab-name="home">Home</a> 
         <a href="#" class="mobile-nav-button" data-tab-name="services">Services</a>
         <a href="#" class="mobile-nav-button" data-tab-name="works">Portfolio</a>
@@ -1035,7 +1045,7 @@
             // Mobile menu elements
             const hamburgerMenuIcon = document.getElementById('hamburgerMenuIcon');
             const mobileNavMenu = document.getElementById('mobileNavMenu');
-            const closeMenuButton = document.getElementById('closeMenuButton');
+            // const closeMenuButton = document.getElementById('closeMenuButton'); // No longer needed
             const mobileNavButtons = document.querySelectorAll('.mobile-nav-button');
 
 
@@ -1137,17 +1147,36 @@
 
             // --- Mobile Menu Event Listeners ---
             hamburgerMenuIcon.addEventListener('click', () => {
-                mobileNavMenu.classList.add('open');
-            });
-
-            closeMenuButton.addEventListener('click', () => {
-                mobileNavMenu.classList.remove('open');
+                if (mobileNavMenu.classList.contains('open')) {
+                    // Close menu
+                    mobileNavMenu.classList.remove('open');
+                    hamburgerMenuIcon.classList.remove('is-active');
+                    mobileNavMenu.addEventListener('transitionend', function handler() {
+                        mobileNavMenu.style.display = 'none';
+                        mobileNavMenu.removeEventListener('transitionend', handler);
+                    });
+                } else {
+                    // Open menu
+                    mobileNavMenu.style.display = 'flex';
+                    // Use requestAnimationFrame to ensure display change is rendered before opacity transition
+                    requestAnimationFrame(() => {
+                        mobileNavMenu.classList.add('open');
+                        hamburgerMenuIcon.classList.add('is-active');
+                    });
+                }
             });
 
             mobileNavButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
-                    mobileNavMenu.classList.remove('open'); // Close menu on click
+                    // Close menu and animate icon back
+                    mobileNavMenu.classList.remove('open'); 
+                    hamburgerMenuIcon.classList.remove('is-active');
+                    mobileNavMenu.addEventListener('transitionend', function handler() {
+                        mobileNavMenu.style.display = 'none';
+                        mobileNavMenu.removeEventListener('transitionend', handler);
+                    });
+                    
                     const targetTabName = event.currentTarget.dataset.tabName;
                     scrollToSection(targetTabName);
 
